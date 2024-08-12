@@ -1,0 +1,76 @@
+{
+    "pokemons": [
+        {
+            "name": "bulbasaur",
+            "type1": "grass",
+            "type2": "poison",
+            "attack": 49,
+            "against_grass": 1,
+            "against_poison": 1,
+            "against_fire": 0.5,
+            "against_water": 1,
+            "against_bug": 1,
+            "against_electric": 1,
+            "against_fairy": 1,
+            "against_fighting": 1,
+            "against_ice": 1,
+            "against_steel": 1
+        },
+        {
+            "name": "charmander",
+            "type1": "fire",
+            "type2": null,
+            "attack": 52,
+            "against_grass": 2,
+            "against_poison": 1,
+            "against_fire": 1,
+            "against_water": 0.5,
+            "against_bug": 1,
+            "against_electric": 1,
+            "against_fairy": 1,
+            "against_fighting": 1,
+            "against_ice": 1,
+            "against_steel": 1
+        },
+        {
+            "name": "squirtle",
+            "type1": "water",
+            "type2": null,
+            "attack": 48,
+            "against_grass": 0.5,
+            "against_poison": 1,
+            "against_fire": 2,
+            "against_water": 1,
+            "against_bug": 1,
+            "against_electric": 1,
+            "against_fairy": 1,
+            "against_fighting": 1,
+            "against_ice": 1,
+            "against_steel": 1
+        }
+    ],
+    "battles": [
+        {
+            "battle_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+            "start": {
+                "request": {
+                    "pokemon_a": "Bulbasaur",
+                    "pokemon_b": "Charmander"
+                },
+                "response": {
+                    "battle_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+                }
+            },
+            "status": {
+                "battle_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                "response": {
+                    "status": "BATTLE_COMPLETED",
+                    "result": {
+                        "winnerName": "Charmander",
+                        "wonByMargin": 25
+                    }
+                }
+            }
+        }
+    ]
+}
