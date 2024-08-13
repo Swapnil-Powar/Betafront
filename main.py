@@ -9,11 +9,11 @@ import json
 # Initialize Flask application
 app = Flask(__name__)
 
-# Configure Celery
-app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
-app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
+# Temporarily comment out Celery configuration
+# app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+# app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
+# celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+# celery.conf.update(app.config)
 
 # Load Pokémon data from a CSV file into a DataFrame
 df = pd.read_csv('pokemon.csv')
@@ -56,7 +56,7 @@ def calculate_damage_percent(round_stats):
     damage_a = (a_attack / 200) * 100 - (((b_against_type1 / 4) * 100) + ((b_against_type2 / 4) * 100))
     return damage_a, None
 
-@celery.task(bind=True)
+# @celery.task(bind=True)
 def run_battle(self, pokemon_a, pokemon_b):
     try:
         round1 = battle_round(pokemon_a, pokemon_b)
@@ -90,7 +90,7 @@ def battle():
     pokemon_a = data['pokemon_a']
     pokemon_b = data['pokemon_b']
     battle_id = str(uuid.uuid4())
-    run_battle.apply_async((pokemon_a, pokemon_b), task_id=battle_id)
+    
     return jsonify({"battle_id": battle_id})
 
 @app.route('/battle/<battle_id>', methods=['GET'])
