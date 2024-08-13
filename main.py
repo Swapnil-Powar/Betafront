@@ -21,7 +21,7 @@ required_files = [
 def home():
     links = [f"<li><a href=\"/files/{filename}\">{filename}</a></li>" for filename in required_files]
     links_html = "<ul>" + "\n".join(links) + "</ul>"
-    return f"
+    return f"""
     <h1>Welcome to the JSON Files Server</h1>
     <p>Use the following endpoints to interact with the server:</p>
     <ul>
@@ -29,7 +29,7 @@ def home():
         <li>Fetch specific JSON files:</li>
     </ul>
     {links_html}
-    "
+    """
 
 # List all JSON files in the base directory
 @app.route("/files", methods=["GET"])
@@ -54,6 +54,7 @@ def get_file(filename):
         return jsonify({"error": "File not found"}), 404
 
 if __name__ == "__main__":
+    logging.info("Starting the Flask application")
     try:
         app.run(host="0.0.0.0", port=8080, debug=True)
     except Exception as e:
