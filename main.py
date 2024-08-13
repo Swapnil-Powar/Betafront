@@ -6,21 +6,34 @@ import difflib
 import time
 import json
 
+print('Starting application...')
 # Initialize Flask application
 app = Flask(__name__)
+print('Flask application initialized.')
 
 # Temporarily comment out Celery configuration
-# app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
-# app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
-# celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-# celery.conf.update(app.config)
+try:
+    # app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+    # app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
+    # celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+    # celery.conf.update(app.config)
+    print('Celery configuration commented out.')
+except Exception as e:
+    print(f'Error in Celery configuration: {e}')
 
 # Load Pokémon data from a CSV file into a DataFrame
-df = pd.read_csv('pokemon.csv')
+try:
+    df = pd.read_csv('pokemon.csv')
+    print('Loaded Pokémon data into DataFrame.')
+except Exception as e:
+    print(f'Error loading Pokémon data: {e}')
 
 # Battle storage
 battle_results = {}
 
+print('Application setup complete.')
+
+# Define routes
 def get_pokemon_stats(pokemon_name):
     pokemon_data = df[df['name'].str.lower() == pokemon_name.lower()].iloc[0]
     return {
