@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, send_file, abort
 import os
 import json
 
@@ -7,6 +7,17 @@ import json
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return """
+    <h1>Welcome to the JSON Files Server</h1>
+    <p>Use the following endpoints to interact with the server:</p>
+    <ul>
+        <li><a href=\"/files\">List all JSON files</a></li>
+        <li>Fetch a specific JSON file: <code>/files/&lt;filename&gt;</code></li>
+    </ul>
+    """
 
 # List all JSON files in the base directory
 @app.route("/files", methods=["GET"])
