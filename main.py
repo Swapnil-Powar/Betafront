@@ -1,6 +1,7 @@
 import logging
-from flask import Flask, jsonify, send_file
+from flask import Flask, jsonify, abort
 import os
+import json
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -19,7 +20,13 @@ def list_files():
 def get_file(filename):
     logging.debug(f"Request for file: {filename}")
     if os.path.isfile(filename) and filename.endswith(".json"):
-        return send_file(filename)
+        try:
+            with open(filename, "r") as file:
+                data = json.load(file)
+            return jsonify(data)
+        except json.JSONDecodeError as e:
+            logging.error(f"Error decoding JSON from file {filename}: {e}")
+            abort(500, description="Error decoding JSON")
     else:
         return jsonify({"error": "File not found"}), 404
 
