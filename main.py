@@ -26,15 +26,15 @@ def home():
     <p>Use the following endpoints to interact with the server:</p>
     <ul>
         <li><a href=\"/files\">List all JSON files</a></li>
-        <li>Fetch specific JSON files:</li>
+        {links_html}
     </ul>
-    {links_html}
     """
 
 # List all JSON files in the base directory
 @app.route("/files", methods=["GET"])
 def list_files():
-    files = [f for f in os.listdir(".") if os.path.isfile(f) and f.endswith(".json")]
+    all_files = [f for f in os.listdir(".") if os.path.isfile(f) and f.endswith(".json")]
+    files = list(set(required_files) & set(all_files))  # Ensure listed files are the required ones
     logging.debug(f"Files found: {files}")
     return jsonify(files)
 
@@ -42,7 +42,7 @@ def list_files():
 @app.route("/files/<filename>", methods=["GET"])
 def get_file(filename):
     logging.debug(f"Request for file: {filename}")
-    if os.path.isfile(filename) and filename.endswith(".json"):
+    if os.path.isfile(filename) and filename in required_files:
         try:
             with open(filename, "r") as file:
                 data = json.load(file)
