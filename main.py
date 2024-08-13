@@ -8,16 +8,28 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 
+required_files = [
+    "Battle API.json",
+    "Battle Status API (Completed).json",
+    "Battle Status API (Failed).json",
+    "Battle Status API (In Progress).json",
+    "Listing API.json",
+    "pokemon_battle_simulator_response.json"
+]
+
 @app.route("/")
 def home():
-    return """
+    links = [f"<li><a href=\"/files/{filename}\">{filename}</a></li>" for filename in required_files]
+    links_html = "<ul>" + "\n".join(links) + "</ul>"
+    return f"
     <h1>Welcome to the JSON Files Server</h1>
     <p>Use the following endpoints to interact with the server:</p>
     <ul>
         <li><a href=\"/files\">List all JSON files</a></li>
-        <li>Fetch a specific JSON file: <code>/files/&lt;filename&gt;</code></li>
+        <li>Fetch specific JSON files:</li>
     </ul>
-    """
+    {links_html}
+    "
 
 # List all JSON files in the base directory
 @app.route("/files", methods=["GET"])
